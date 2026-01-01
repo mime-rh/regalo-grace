@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test para Grace</title>
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;
+}
+
+h1, h2 {
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 14px;
+  background: #d6336c;
+  color: #fff;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* CARTA */
+.letter-container {
+  overflow: hidden;
+}
+
+.letter {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.page {
+  min-width: 100%;
+  padding: 10px;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.page img {
+  width: 90px;
+  margin-bottom: 12px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.controls button {
+  background: #444;
+}
+
+/* FINAL */
+#final p {
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+/* PASSWORD */
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* CARTA SECRETA */
+#secretLetter {
+  overflow-y: auto;
+  align-items: flex-start;
+}
+
+#secretLetter .card {
+  margin-top: 20px;
+  padding-bottom: 40px;
+}
+
+#secretLetter p {
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.final-image {
+  width: 100%;
+  border-radius: 14px;
+  margin-top: 20px;
+  opacity: 0.95;
+}
+
+/* ANIMACIONES */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<div class="screen active" id="start">
+  <div class="card">
+    <h1>Test para Grace</h1>
+    <button onclick="startQuiz()">Empezar</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="screen" id="quiz">
+  <div class="card">
+    <h2 id="question"></h2>
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div class="screen" id="final"
+     ontouchstart="touchStart(event)"
+     ontouchend="finalTouch(event)">
+  <div class="card">
+    <h1>Feliz Año Nuevo, Grace </h1>
+    <p>(No sigas avanzando)</p>
+    <div class="controls">
+      <button onclick="prevFinal()">←</button>
+      <button onclick="nextFinal()">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD -->
+<div class="screen" id="password">
+  <div class="card">
+    <h2>Lo que sientes por Mi</h2>
+    <input type="text" id="secretInput" placeholder="Contraseña">
+    <button onclick="checkPassword()">Entrar</button>
+  </div>
+</div>
+
+<!-- CARTA SECRETA -->
+<div class="screen" id="secretLetter">
+  <div class="card">
+    <h2>Pequeña confesión</h2>
+    <p>
+      Bueno, si llegaste hasta aquí, seguramente es porque te ayudé. Seguramente fuiste algo tímida o quisquillosa para estar aquí, jajaja.<br>
+      Hablemos un poco de lo que no te llegué a contar el día que estabas con fiebre.<br><br>
+      Cuando tenía esa edad aproximadamente, estaba en una situación similar, aunque "similar" queda corto. Tenía depresión, recuerdo que no me cepillaba los dientes ni me bañaba durante semanas, o incluso meses. Me sentía horrible conmigo mismo y la verdad solo esperaba morirme, no quería seguir viviendo y odiaba ser yo mismo. Pero no quería cambiar, me sentía cómodo en mi propio sitio; mi habitación era un desastre: comida, suciedad, ropa en el suelo, sangre y muchas cosas desagradables. Pero había alguien que me escribía todos los días, y había alguien con quien me era cómodo conversar, y esa eras tú, Grace. Eras muy agradable y, poco a poco, me empezaba a abrir más a ti, y la verdad agradezco haberlo hecho. Confiaba mucho en ti y sabes, creo que recuerdas que antes ni siquiera usaba stickers, escribía de manera lenta y aburrida, pero siempre tú, Grace, estabas detrás. Con cada audio, mensaje, video o imagen, siempre me acompañaste en mi miseria. Negué mi sentir; me estaba enamorando rápidamente de ti y no lo quería aceptar, luego de decirme de mil maneras que no quería estar con ninguna persona, que no quería tener hijos, que no quería casarme, Grace me hacía dudar. Grace me hacía sentir vivo, hasta ese 22 de febrero del 2023, a las 9:30 de la mañana, Grace se puso a hablar de un personaje bíblico y la verdad, me quedé perdido en ti. Me enamoré perdidamente de ti, ya no podía dejar de sentir y no me quedó de otra que aceptarlo. Pero sabía que no podía estar contigo; era una persona miserable, sucia y mala persona, pero tú eras radiante, hermosa, amable y no podía evitar quererte más y más. Tenía miedo de que esto en algún momento terminara; eras una mujer maravillosa, sabía que enamorarías a muchas personas, y que en algún momento, Grace se alejaría de mí por ello. Y eso estaba bien, quería tu felicidad más que nada en el mundo y acepté mi rol como amigo. Pero fui egoísta, no podía dejar de mandarte indirectas con mi cariño oculto entre bromas y mensajes ocultos; me generaba felicidad que quizás entendieras, y así. Y sabes, no quería perderte, te quería para mí, y yo era miserable, una mala persona, lo peor del mundo. Así que quise cambiar. Quise ser una persona a tu altura, ser la persona que soñaba que tendrías a tu lado, alguien que te ame, te trate bien, te entienda y que te tenga paciencia. Quise ser esa persona y por eso cambié, cambié porque tenía miedo y porque te amaba con mi ser, porque quería estar a tu lado. Ahora mismo no soy esa persona que quería que estuviera a tu lado, pero poco a poco voy mejorando. No te quedes estancada en ese sitio, no te deprimas, no dependas de mí; perfectamente lo puedes hacer, y a pesar de todo seguiré contigo, Grace, pero considero que es por tu bien, que si un día me ocurre algo, puedas estar con nuestros niños y que puedas cuidarlos, no esperando la voluntad de Dios, sino siguiendo tu propia voluntad. Felices fiestas, te amo con todo mi ser y espero que esta dinámica te haya gustado. Con cariño, de tu futuro esposo.
+    </p>
+    <img src="stickers/final.jpg" class="final-image">
+  </div>
+</div>
+
+<script>
+const questions = [
+  {q:"¿Cuándo me enamoré de ti?", a:["22 de febrero del 2022","23 de febrero del 2021","22 de febrero del 2023"], correct:2},
+  {q:"Lo que más le gusta a Daniel de mí es", a:["Mi linda cara","Mi forma de amar","Mi personalidad"], correct:2},
+  {q:"¿Qué le gusta más a Daniel de mi personalidad?", a:["Mi autismo","Mi alegría","Mi fortaleza"], correct:1},
+  {q:"Lo que menos le gusta de mi personalidad", a:["Mi indecisión","Mi inseguridad","Mi autoestima"], correct:2},
+  {q:"T* a** m**** D*****", a:["Qué alta","Qué rara","Es bonita"], correct:2}
+];
+
+let index=0, score=0, currentPage=0, startX=0, hiddenAttempts=0;
+const REQUIRED_ATTEMPTS=25;
+
+function startQuiz(){ showScreen("quiz"); loadQuestion(); }
+
+function loadQuestion(){
+  const q = questions[index];
+  question.textContent = q.q;
+  answers.innerHTML="";
+  q.a.forEach((text,i)=>{
+    const btn=document.createElement("button");
+    btn.textContent=text;
+    btn.onclick=()=>{
+      if(i===q.correct) score++;
+      index++;
+      index<questions.length ? loadQuestion() : showResult();
+    };
+    answers.appendChild(btn);
+  });
+}
+
+function showResult(){
+  if(score===5){
+    answers.innerHTML=
+      '<div class="letter-container" ontouchstart="touchStart(event)" ontouchend="touchEnd(event)">'+
+      '<div class="letter" id="letter">'+
+      page("p1.gif",`Página 1<br><br>Buenos días, Grace. Estamos ya en 2026.`)+
+      page("p2.gif",`Página 2<br><br>El 2025 estuvo lleno de mucho crecimiento nuestro. Empezaste con dudas con la Sra. Mary para posteriormente aceptar formar una relación con vista al futuro.`)+
+      page("p3.gif",`Página 3<br><br>Pasamos por muchos problemas. Tuvimos diferencias, discusiones, no nos entendíamos y ambos sufrimos mucho en este proceso. Debo admitir que tenía fe, a pesar de no ver un futuro claro. Estaba lleno de dudas porque no entendía tus sentimientos. Me sentí traicionado, dañado, apartado. No me sentía amado.`)+
+      page("p4.gif",`Página 4<br><br>Pero ese proceso también fue muy bonito. Me gustaba verte, te veías muy bonita con tu cabello largo. Aún recuerdo cuando pensé que íbamos a terminar y tú, lejos de sentirte mal, dimos una vuelta al centro comercial. Nos abrazamos, me permitiste darte un beso en la frente. Recuerdo ese calor, esa sensación de tenerte en mis brazos. Los momentos en los taxis, en la combi roja, acostarme en tu hombro, jugar con tu cabello.`)+
+      page("p5.gif",`Página 5<br><br>Y ahora estamos en la última etapa. Nos volvimos terribles esas dos noches y más cariñosos después. Amo ser la persona que está a tu lado. Créeme que me siento afortunado de tenerte tanto tiempo conmigo. Ya tenemos siete años juntos y nos espera un gran camino por delante.<br><br>— Daniel`)+
+      '</div></div>'+
+      '<div class="controls"><button onclick="prevPage()">←</button><button onclick="nextPage()">→</button></div>';
+  } else{
+    question.textContent=`Respuestas correctas: ${score} de 5`;
+    answers.innerHTML='<img src="stickers/fail.gif" style="width:120px;margin-bottom:12px;"><p>Aun así, te elijo.</p>';
+  }
+}
+
+function page(img,text){ return `<div class="page"><img src="stickers/${img}"><p>${text}</p></div>`; }
+
+function updatePage(){ document.getElementById("letter").style.transform=`translateX(-${currentPage*100}%)`; }
+function nextPage(){ if(currentPage===4){ showScreen("final"); return; } currentPage++; updatePage(); }
+function prevPage(){ if(currentPage>0){ currentPage--; updatePage(); } }
+
+function touchStart(e){ startX=e.changedTouches[0].screenX; }
+function touchEnd(e){ const d=startX-e.changedTouches[0].screenX; if(d>50) nextPage(); if(d<-50) prevPage(); }
+
+function nextFinal(){ 
+  hiddenAttempts++; 
+  if(hiddenAttempts >= REQUIRED_ATTEMPTS) showScreen("password");
+}
+
+function prevFinal(){ showScreen("quiz"); }
+
+function finalTouch(e){
+  const start = e.changedTouches[0].screenX;
+  const end = e.changedTouches[0].screenX;
+  const d = start - end;
+  if(d>50) nextFinal();
+  if(d<-50) prevFinal();
+}
+
+function checkPassword(){
+  const val=secretInput.value.trim().toLowerCase();
+  if(val==="te amo mucho daniel"){ showScreen("secretLetter"); }
+  else{ const card=document.querySelector("#password .card"); card.style.animation="shake 0.3s"; setTimeout(()=>card.style.animation="",300);}
+}
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+</script>
+
+</body>
+</html>
